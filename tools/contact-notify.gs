@@ -7,6 +7,11 @@
  *        NOTIFY_EMAIL      : (선택) 알림 받을 이메일, 여러 개면 쉼표로 구분
  *   → 배포 → 새 배포 → 유형: 웹 앱, 실행 사용자: 나, 액세스 권한: 모든 사용자 → 배포
  *   → 나오는 웹 앱 URL(https://script.google.com/macros/s/.../exec)을 js/config.js 의 formEndpoint 에 입력
+ *   (script.google.com 에서 바로 만든 경우에도 동작: 처음 접수될 때 "홈페이지 상담문의" 시트를 자동 생성,
+ *    편집기에서 showSheetUrl 실행 → 실행 로그에 시트 주소 표시)
+ *
+ * 코드 수정 후에는: 배포 → 배포 관리 → 연필(수정) → 버전: "새 버전" → 배포
+ *   (새 배포를 만들면 URL 이 바뀌므로 주의)
  *
  * 웹훅 주소는 여기(스크립트 속성)에만 두고 홈페이지 코드에는 넣지 않습니다.
  */
@@ -33,16 +38,22 @@ function doPost(e) {
     page: clip_(p.page, 200),
   };
 
-  const lock = LockService.getScriptLock();
-  lock.waitLock(10000);
+  // 시트 저장이 실패해도 알림은 보내고, 실패 사실을 알림에 적음
+  let saveError = '';
   try {
-    sheet_().appendRow([new Date(), d.name, d.phone, d.email, d.type, d.service, d.message, d.page].map(safeCell_));
-  } finally {
-    lock.releaseLock();
+    const lock = LockService.getScriptLock();
+    lock.waitLock(10000);
+    try {
+      sheet_().appendRow([new Date(), d.name, d.phone, d.email, d.type, d.service, d.message, d.page].map(safeCell_));
+    } finally {
+      lock.releaseLock();
+    }
+  } catch (err) {
+    saveError = String(err);
   }
 
-  notifySlack_(d);
-  notifyEmail_(d);
+  try { notifySlack_(d, saveError); } catch (err) { console.error(err); }
+  try { notifyEmail_(d); } catch (err) { console.error(err); }
   return json_({ ok: true });
 }
 
@@ -58,10 +69,11 @@ function testNotify() {
   notifyEmail_(d);
 }
 
-function notifySlack_(d) {
+function notifySlack_(d, saveError) {
   const url = PropertiesService.getScriptProperties().getProperty('SLACK_WEBHOOK_URL');
   if (!url) return;
   const lines = [
+    saveError ? `:warning: 시트 저장 실패: ${saveError}` : '',
     ':bell: *새 상담문의가 접수되었습니다*',
     `*성함* ${d.name}   *연락처* ${d.phone}`,
     d.email ? `*이메일* ${d.email}` : '',
@@ -90,8 +102,26 @@ function notifyEmail_(d) {
   });
 }
 
+/* 저장할 스프레드시트: 시트에서 만든 스크립트면 그 시트,
+   script.google.com 에서 따로 만든 스크립트면 "홈페이지 상담문의" 시트를 자동으로 만들어 사용 */
+function spreadsheet_() {
+  const active = SpreadsheetApp.getActiveSpreadsheet();
+  if (active) return active;
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('SHEET_ID');
+  if (id) return SpreadsheetApp.openById(id);
+  const ss = SpreadsheetApp.create('홈페이지 상담문의');
+  props.setProperty('SHEET_ID', ss.getId());
+  return ss;
+}
+
+/* 편집기에서 실행하면 저장용 시트 주소를 로그에 보여줌 */
+function showSheetUrl() {
+  console.log(spreadsheet_().getUrl());
+}
+
 function sheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = spreadsheet_();
   const sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   if (sh.getLastRow() === 0) {
     sh.appendRow(HEADERS);

@@ -21,6 +21,24 @@ HTML/CSS/JS만으로 만든 정적 사이트입니다. 서버·빌드가 필요 
 - GitHub 저장소 Settings → Pages → Custom domain 에 `songpa.dahamtax.com` 입력 → Enforce HTTPS 체크
 - www.dahamtax.com 은 본사 사이트이므로 건드리지 않음
 
+본사 도메인 담당자에게 요청할 내용: 아래를 그대로 보내시면 됩니다.
+
+Route 53 의 dahamtax.com 호스팅 영역에 레코드 1개 추가 부탁드립니다.
+
+레코드 이름: songpa
+유형: CNAME
+값: dahamsptax.github.io
+TTL: 300 (기본값)
+
+레코드가 추가된 다음 할 일
+
+제가 할 일: 홈페이지에 songpa.dahamtax.com이 적힌 CNAME 파일을 넣고, 도메인과 관리자 화면 설정을 바꾼 뒤 푸시합니다.
+
+직접 하실 일: GitHub 저장소 Settings → Pages → Custom domain에 songpa.dahamtax.com을 입력하고 Save를 누릅니다. 확인이 끝나면 Enforce HTTPS에 체크합니다. 몇 분에서 몇 시간 걸릴 수 있습니다.
+
+그러면 홈페이지는 https://songpa.dahamtax.com, 관리자 화면은 https://songpa.dahamtax.com/admin/ 으로 열립니다. 예전 github.io 주소는 새 주소로 자동으로 넘어갑니다.
+
+
 ## 3. 내용 수정 위치
 
 | 수정할 것 | 파일 |
@@ -35,6 +53,8 @@ HTML/CSS/JS만으로 만든 정적 사이트입니다. 서버·빌드가 필요 
 | 상담 폼 전송 방식 | `contact.html` 주석 참고 (기본: 메일 앱으로 전송) |
 
 GitHub 웹에서 파일을 열고 연필(✏️) 아이콘으로 바로 수정 → Commit 하면 1~2분 뒤 사이트에 반영됩니다.
+
+
 
 지금 쓸 수 있는 주소는 이렇습니다.
 
