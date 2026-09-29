@@ -62,16 +62,20 @@ function doGet() {
   return json_({ ok: true, message: '상담문의 수신기가 동작 중입니다.' });
 }
 
-/* Apps Script 편집기에서 실행해 슬랙·이메일 알림을 시험하는 함수 */
+/* Apps Script 편집기에서 실행해 슬랙·이메일 알림을 시험하는 함수 (결과는 아래 "실행 로그"에 표시) */
 function testNotify() {
+  const props = PropertiesService.getScriptProperties().getProperties();
+  console.log('설정된 스크립트 속성: ' + (Object.keys(props).join(', ') || '(없음)'));
+  const url = props.SLACK_WEBHOOK_URL || '';
+  console.log('SLACK_WEBHOOK_URL: ' + (url ? url.slice(0, 40) + '… (길이 ' + url.length + ')' : '없음 — 속성 이름을 확인하세요'));
   const d = { name: '테스트', phone: '010-0000-0000', email: '', type: '개인사업자', service: '세무기장 / 자문', message: '알림 테스트입니다.', page: 'test' };
   notifySlack_(d);
   notifyEmail_(d);
 }
 
 function notifySlack_(d, saveError) {
-  const url = PropertiesService.getScriptProperties().getProperty('SLACK_WEBHOOK_URL');
-  if (!url) return;
+  const url = (PropertiesService.getScriptProperties().getProperty('SLACK_WEBHOOK_URL') || '').trim();
+  if (!url) { console.warn('슬랙 알림 건너뜀: SLACK_WEBHOOK_URL 스크립트 속성이 없습니다.'); return; }
   const lines = [
     saveError ? `:warning: 시트 저장 실패: ${saveError}` : '',
     ':bell: *새 상담문의가 접수되었습니다*',
@@ -81,12 +85,14 @@ function notifySlack_(d, saveError) {
     '*문의 내용*',
     '>' + d.message.replace(/\n/g, '\n>'),
   ].filter(Boolean);
-  UrlFetchApp.fetch(url, {
+  const res = UrlFetchApp.fetch(url, {
     method: 'post',
     contentType: 'application/json',
     payload: JSON.stringify({ text: lines.join('\n') }),
     muteHttpExceptions: true,
   });
+  // 성공이면 200 / ok. no_service·invalid_token 등이 나오면 웹훅 주소가 잘못된 것
+  console.log('슬랙 응답: ' + res.getResponseCode() + ' ' + res.getContentText());
 }
 
 function notifyEmail_(d) {
