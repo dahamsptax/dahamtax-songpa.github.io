@@ -1,0 +1,48 @@
+# Sveltia CMS 설정 — 관리자 주소: 홈페이지주소/admin/
+# 로그인: "Sign In with Token" → GitHub 개인 액세스 토큰(Contents 읽기·쓰기 권한) 붙여넣기
+backend:
+  name: github
+  repo: dahamsptax/dahamtax-songpa.github.io
+  branch: main
+
+site_url: https://dahamsptax.github.io/dahamtax-songpa.github.io/
+
+# 본문에 넣은 이미지가 저장되는 곳
+media_folder: images/posts
+public_folder: /images/posts   # 사이트에서는 js/main.js 가 상대경로로 바꿔 표시함
+
+collections:
+  - name: content
+    label: 홈페이지
+    files:
+      - name: posts
+        label: 칼럼
+        file: data/posts.json
+        format: json
+        fields:
+          - name: posts
+            label: 칼럼 목록
+            widget: list
+            root: true              # posts.json 파일 전체가 글 목록(배열)
+            add_to_top: true        # 새 글은 맨 위에 추가
+            collapsed: true
+            summary: "{{date}} · [{{category}}] {{title}}"
+            fields:
+              - { name: title, label: 제목, widget: string }
+              - name: category
+                label: 카테고리
+                widget: select
+                # js/config.js 의 CATEGORIES 와 같게 유지하세요
+                options: [세무기장, 경정청구, 아웃소싱, 세무조사, 법인전환, 세무노트]
+              - name: date
+                label: 작성일
+                widget: datetime
+                format: YYYY-MM-DD
+                time_format: false
+              - { name: summary, label: "요약 (목록·검색에 표시)", widget: text, required: false }
+              - { name: body, label: 본문, widget: richtext }
+              - name: id
+                label: "글 주소 (선택)"
+                widget: string
+                required: false
+                hint: "영문·숫자·하이픈만 사용 (예: corporate-tax-2026). 비워두면 자동으로 만들어집니다. 한 번 정한 뒤에는 바꾸지 않는 것이 좋습니다."

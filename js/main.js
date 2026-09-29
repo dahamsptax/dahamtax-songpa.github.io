@@ -101,6 +101,13 @@
       .then(renderPosts);
   }
 
+  /* 본문: 관리자(Sveltia CMS)가 저장한 마크다운 → HTML.
+     이미지 주소 /images/... 는 하위 경로 사이트에서도 보이도록 상대경로로 바꿈 */
+  function bodyHtml(md) {
+    const html = window.marked ? window.marked.parse(md || "") : md || "";
+    return html.replace(/(src|href)="\/images\//g, '$1="images/');
+  }
+
   /* id 를 비워두면 날짜+제목으로 자동 생성 */
   function postId(p) {
     if (p.id) return String(p.id);
@@ -171,7 +178,7 @@
         <span class="cat" style="color:${catColor(p.category)}">${esc(p.category)}</span>
         <h1>${esc(p.title)}</h1>
         <time>${fmtDate(p.date)}</time>
-        <div class="post-body">${p.body}</div>
+        <div class="post-body">${bodyHtml(p.body)}</div>
         <div class="post-cta">
           <p><strong>비슷한 상황이신가요?</strong><br>사업장 상황에 맞춰 직접 안내드립니다.</p>
           <a class="btn btn-primary" href="contact.html">상담 신청하기</a>
