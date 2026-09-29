@@ -55,7 +55,7 @@
       </div>
       <div><h4>사무소 안내</h4>
         <p>${esc(S.address)}</p>
-        <p><a href="tel:${esc(S.phone)}">${esc(S.phone)}</a><br><a href="mailto:${esc(S.email)}">${esc(S.email)}</a></p>
+        <p><a href="tel:${esc(S.phone)}">${esc(S.phone)}</a>${S.mobile ? ` / <a href="tel:${esc(S.mobile)}">${esc(S.mobile)}</a>` : ""}<br><a href="mailto:${esc(S.email)}">${esc(S.email)}</a></p>
         <p class="muted">${S.hours.map(esc).join("<br>")}</p>
         <a class="btn btn-primary btn-sm" href="contact.html">상담 신청하기</a>
       </div>
@@ -68,9 +68,17 @@
 
   /* ---------- 공통 치환: data-site="phone" 등 ---------- */
   document.querySelectorAll("[data-site]").forEach(el => {
-    const v = S[el.dataset.site];
-    if (v == null) return;
+    const key = el.dataset.site, v = S[key];
+    if (v == null || v === "") {  // 값이 없으면 dt/dd 줄째로 숨김
+      if (el.tagName === "DD" && el.previousElementSibling?.tagName === "DT") el.previousElementSibling.hidden = true;
+      el.hidden = true;
+      return;
+    }
     if (el.tagName === "A" && el.dataset.href) el.href = el.dataset.href + v;
+    if ((key === "phone" || key === "mobile") && el.tagName !== "A") {
+      el.innerHTML = `<a href="tel:${esc(v)}">${esc(v)}</a>`;
+      return;
+    }
     el.textContent = Array.isArray(v) ? v.join(" / ") : v;
   });
 

@@ -10,8 +10,9 @@ window.SITE = {
   domain: "https://www.example.com", // 나중에 실제 도메인으로 변경
   tagline: "정확한 신고를 넘어, 절세의 기준을 만듭니다",
   description: "회계장부 작성부터 경정청구, 세무조사 대응까지 기업 세무 전반을 관리합니다.",
-  address: "서울특별시 OO구 OO로 00, 0층",
-  phone: "02-000-0000",
+  address: "서울특별시 송파구 토성로15길 3-3, 201호",
+  phone: "02-477-7042",                // 사무실 전화
+  mobile: "010-8674-9260",             // 휴대폰 (비워두면 표시 안 함)
   email: "contact@example.com",
   kakao: "#",                        // 카카오톡 채널 링크
   blog: "#",                         // 네이버 블로그 링크
