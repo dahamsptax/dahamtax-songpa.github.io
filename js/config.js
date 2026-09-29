@@ -2,9 +2,11 @@
    사이트 기본 정보 — 여기만 고치면 전체 페이지에 반영됩니다.
    ========================================================= */
 window.SITE = {
-  name: "OO 세무회계",               // 사무소 이름
-  nameEn: "OO Tax & Accounting",
-  logoText: "OO TAX",                // 로고 자리에 표시할 글자 (이미지 로고는 css/logo 참고)
+  name: "다함세무법인 송파지점",      // 사무소 이름
+  nameEn: "Daham Tax Corp. Songpa Branch",
+  logoText: "다함세무법인",             // 로고 이미지가 없을 때 표시할 글자 (푸터에도 사용)
+  logoImage: "images/logo.png",      // 헤더 로고 이미지 (비워두면 logoText 표시)
+  branch: "송파지점",                  // 로고 옆에 표시할 지점명
   domain: "https://www.example.com", // 나중에 실제 도메인으로 변경
   tagline: "정확한 신고를 넘어, 절세의 기준을 만듭니다",
   description: "회계장부 작성부터 경정청구, 세무조사 대응까지 기업 세무 전반을 관리합니다.",
@@ -35,3 +37,7 @@ window.SERVICES = [
     desc: "개인사업자의 법인전환, 신규 법인설립과 이후 세무 세팅까지 안내합니다.",
     tags: "법인전환 · 법인설립 · 세무세팅" }
 ];
+
+/* 칼럼 카테고리 (칼럼 목록 필터 버튼 순서)
+   ※ 바꾸면 .pages.yml 의 category values 도 똑같이 맞춰 주세요. */
+window.CATEGORIES = ["세무기장", "경정청구", "아웃소싱", "세무조사", "법인전환", "세무노트"];

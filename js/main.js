@@ -18,7 +18,9 @@
   header.className = "site-header";
   header.innerHTML = `
     <div class="container header-inner">
-      <a class="logo" href="index.html"><span class="logo-mark">${esc(S.logoText)}</span><span class="logo-sub">${esc(S.name)}</span></a>
+      ${S.logoImage
+        ? `<a class="logo logo-img" href="index.html"><img src="${esc(S.logoImage)}" alt="${esc(S.logoText)}"><span class="logo-branch">${esc(S.branch || "")}</span></a>`
+        : `<a class="logo" href="index.html"><span class="logo-mark">${esc(S.logoText)}</span><span class="logo-sub">${esc(S.name)}</span></a>`}
       <button class="menu-btn" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav class="nav">
         <div class="nav-item has-sub">
@@ -72,8 +74,38 @@
     el.textContent = Array.isArray(v) ? v.join(" / ") : v;
   });
 
-  /* ---------- 칼럼 카드 ---------- */
-  const posts = (window.POSTS || []).slice().sort((a, b) => b.date.localeCompare(a.date));
+  /* 홈: 서비스 카드 */
+  const svcGrid = document.getElementById("service-grid");
+  if (svcGrid) svcGrid.innerHTML = SV.map(s => `
+    <a class="svc-card" href="services.html#${s.id}">
+      <h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p>
+      <span class="tags">${esc(s.tags)}</span><span class="more">자세히 보기 →</span>
+    </a>`).join("");
+
+  /* ---------- 칼럼: data/posts.json 에서 불러옴 (관리자 페이지 Pages CMS 로 수정) ---------- */
+  const latest = document.getElementById("latest-posts");
+  const list = document.getElementById("post-list");
+  const article = document.getElementById("post-article");
+  if (latest || list || article) {
+    fetch("data/posts.json", { cache: "no-cache" })
+      .then(r => r.json())
+      .catch(() => [])
+      .then(renderPosts);
+  }
+
+  /* id 를 비워두면 날짜+제목으로 자동 생성 */
+  function postId(p) {
+    if (p.id) return String(p.id);
+    let h = 0;
+    for (const ch of p.title || "") h = (h * 31 + ch.codePointAt(0)) >>> 0;
+    return `${p.date}-${h.toString(36)}`;
+  }
+
+  function renderPosts(data) {
+  const posts = (Array.isArray(data) ? data : [])
+    .filter(p => p && p.title && p.date)
+    .map(p => ({ category: "", summary: "", body: "", ...p, date: String(p.date).slice(0, 10), id: postId(p) }))
+    .sort((a, b) => b.date.localeCompare(a.date));
   const card = p => `
     <a class="post-card" href="post.html?id=${encodeURIComponent(p.id)}">
       <div class="thumb" style="--c:${catColor(p.category)}">
@@ -88,18 +120,10 @@
       </div>
     </a>`;
 
-  /* 홈: 서비스 카드 + 최신 칼럼 3개 */
-  const svcGrid = document.getElementById("service-grid");
-  if (svcGrid) svcGrid.innerHTML = SV.map(s => `
-    <a class="svc-card" href="services.html#${s.id}">
-      <h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p>
-      <span class="tags">${esc(s.tags)}</span><span class="more">자세히 보기 →</span>
-    </a>`).join("");
-  const latest = document.getElementById("latest-posts");
+  /* 홈: 최신 칼럼 3개 */
   if (latest) latest.innerHTML = posts.slice(0, 3).map(card).join("");
 
   /* 칼럼 목록: 카테고리 필터 + 검색 + 페이지네이션 */
-  const list = document.getElementById("post-list");
   if (list) {
     const PER = 9;
     const params = new URLSearchParams(location.search);
@@ -125,7 +149,6 @@
   }
 
   /* 칼럼 상세 */
-  const article = document.getElementById("post-article");
   if (article) {
     const id = new URLSearchParams(location.search).get("id");
     const i = posts.findIndex(p => p.id === id);
@@ -151,6 +174,7 @@
         </nav>`;
     }
   }
+  } /* renderPosts */
 
   /* 서비스 상세 */
   const svcList = document.getElementById("service-list");

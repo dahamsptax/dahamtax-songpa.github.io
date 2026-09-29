@@ -1,0 +1,44 @@
+# Pages CMS 설정 (https://app.pagescms.org 에서 GitHub 로그인 후 이 저장소를 열면 관리자 화면이 나옵니다)
+media:
+  input: images/posts        # 업로드한 이미지가 저장될 폴더
+  output: images/posts       # 본문에 들어갈 이미지 주소 (앞에 / 를 붙이지 않음: 저장소 하위 주소에서도 동작)
+  categories: [image]
+  rename: safe
+
+content:
+  - name: posts
+    label: 칼럼
+    type: file
+    path: data/posts.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: 제목
+        type: string
+        required: true
+      - name: category
+        label: 카테고리
+        type: select
+        required: true
+        options:
+          # js/config.js 의 CATEGORIES 와 같게 유지하세요
+          values: [세무기장, 경정청구, 아웃소싱, 세무조사, 법인전환, 세무노트]
+      - name: date
+        label: 작성일
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: summary
+        label: 요약 (목록·검색에 표시)
+        type: text
+      - name: body
+        label: 본문
+        type: rich-text
+        options:
+          format: html
+      - name: id
+        label: 글 주소 (선택)
+        type: string
+        description: "영문·숫자·하이픈만 사용 (예: corporate-tax-2026). 비워두면 자동으로 만들어집니다. 한 번 정한 뒤에는 바꾸지 않는 것이 좋습니다."

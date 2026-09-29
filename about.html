@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>세무사 소개 | OO 세무회계</title>
+  <title>세무사 소개 | 다함세무법인 송파지점</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body data-page="about">
 
@@ -18,21 +18,28 @@
 </section>
 
 <section class="block" style="padding-top:20px">
-  <div class="container about-grid">
-    <!-- 사진이 있으면 아래 div 를 <img class="photo" src="images/profile.jpg" alt="대표 세무사"> 로 바꾸세요 -->
-    <div class="photo">대표 세무사 사진</div>
-    <div>
-      <span class="eyebrow">대표 세무사</span>
-      <h2>홍길동 세무사</h2>
-      <p>임시 소개 문구입니다. 경력, 전문 분야, 상담 철학 등을 적어 주세요.</p>
-      <p>두 번째 문단입니다. 고객에게 전하고 싶은 메시지를 적어 주세요.</p>
-      <ul class="career">
-        <li>현) OO 세무회계 대표 세무사</li>
-        <li>전) OO 회계법인 세무본부</li>
-        <li>OO대학교 경영학과 졸업</li>
-        <li>한국세무사회 정회원</li>
-      </ul>
+  <div class="container">
+
+    <!-- ===== 세무사 1명 = <div class="about-grid profile"> ... </div> 블록 1개 =====
+         세무사를 추가하려면 블록 하나를 통째로 복사해서 아래에 붙여넣고 내용만 바꾸세요.
+         사진은 images 폴더에 넣고 src 경로를 바꾸면 됩니다. 사진이 없으면 <img> 대신
+         <div class="photo">사진 준비중</div> 을 쓰세요. -->
+
+    <div class="about-grid profile">
+      <img class="photo" src="images/lee-jonghae.jpg?v=2" alt="이종해 세무사">
+      <div>
+        <span class="eyebrow">대표 세무사</span>
+        <h2>이종해 세무사</h2>
+        <p class="tagline">소기업부터 대기업까지 두루 경험을 갖춘<br>세무 및 유통업 전문가</p>
+        <ul class="career">
+          <li>현) 다함세무법인 송파지점 대표세무사</li>
+          <li>전) BGF리테일(CU편의점) 재무팀 과장 (10년)</li>
+          <li>전) 세무법인 조이위드 (3년)</li>
+          <li>전) 세원세무법인 (2년)</li>
+        </ul>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -44,7 +51,7 @@
   </div>
 </section>
 
-<script src="js/config.js"></script>
-<script src="js/main.js"></script>
+<script src="js/config.js?v=5"></script>
+<script src="js/main.js?v=5"></script>
 </body>
 </html>
