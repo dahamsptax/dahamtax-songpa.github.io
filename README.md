@@ -13,14 +13,13 @@ HTML/CSS/JS만으로 만든 정적 사이트입니다. 서버·빌드가 필요 
 
 > 저장소 이름을 `<아이디>.github.io` 로 만들면 주소가 `https://<아이디>.github.io/` 가 됩니다.
 
-## 2. 도메인 연결 (나중에)
+## 2. 도메인 연결 (songpa.dahamtax.com)
 
-1. `CNAME.example` 파일 이름을 `CNAME` 으로 바꾸고, 안의 내용을 실제 도메인(예: `www.mytax.kr`)으로 수정
-2. 도메인 구입처(가비아 등) DNS 설정
-   - `www` → **CNAME** 레코드 → `<아이디>.github.io`
-   - 루트 도메인(`mytax.kr`) → **A** 레코드 4개: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-3. GitHub **Settings → Pages → Custom domain** 에 도메인 입력 → **Enforce HTTPS** 체크
-4. `js/config.js` 의 `domain`, 각 HTML의 `og:url` 도 실제 도메인으로 변경
+- 주소: https://songpa.dahamtax.com (관리자: https://songpa.dahamtax.com/admin/)
+- `CNAME` 파일에 도메인이 적혀 있음
+- DNS: dahamtax.com 은 AWS Route 53 에서 관리 (본사 담당). 레코드 `songpa` CNAME → `dahamsptax.github.io`
+- GitHub 저장소 Settings → Pages → Custom domain 에 `songpa.dahamtax.com` 입력 → Enforce HTTPS 체크
+- www.dahamtax.com 은 본사 사이트이므로 건드리지 않음
 
 ## 3. 내용 수정 위치
 
@@ -28,7 +27,7 @@ HTML/CSS/JS만으로 만든 정적 사이트입니다. 서버·빌드가 필요 
 |---|---|
 | 사무소명, 주소, 전화, 이메일, 운영시간 | `js/config.js` (헤더·푸터·오시는 길 전체 반영) |
 | 서비스 목록/설명 | `js/config.js` 의 `SERVICES` |
-| 칼럼 글 추가/수정 | `js/posts.js` (블록 하나 복사해서 맨 위에 추가) |
+| 칼럼 글 추가/수정 | 관리자 페이지 `/admin/` (Sveltia CMS, 액세스 토큰 로그인) → `data/posts.json` 에 저장 |
 | 홈 문구 | `index.html` |
 | 세무사 소개·경력·사진 | `about.html` |
 | 자주 묻는 질문 | `faq.html` |
