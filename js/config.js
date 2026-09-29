@@ -7,7 +7,7 @@ window.SITE = {
   logoText: "다함세무법인",             // 로고 이미지가 없을 때 표시할 글자 (푸터에도 사용)
   logoImage: "images/logo.png",      // 헤더 로고 이미지 (비워두면 logoText 표시)
   branch: "송파지점",                  // 로고 옆에 표시할 지점명
-  domain: "https://songpa.dahamtax.com", // 홈페이지 주소 (CNAME 파일과 같게)
+  domain: "https://dahamsptax.github.io/dahamtax-songpa.github.io", // 홈페이지 주소 (도메인 연결 시 CNAME 파일과 같게)
   tagline: "정확한 신고를 넘어, 절세의 기준을 만듭니다",
   description: "회계장부 작성부터 경정청구, 세무조사 대응까지 기업 세무 전반을 관리합니다.",
   address: "서울특별시 송파구 토성로15길 3-3, 201호",

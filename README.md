@@ -15,7 +15,8 @@ HTML/CSS/JS만으로 만든 정적 사이트입니다. 서버·빌드가 필요 
 
 ## 2. 도메인 연결 (songpa.dahamtax.com)
 
-- 주소: https://songpa.dahamtax.com (관리자: https://songpa.dahamtax.com/admin/)
+- 주소(연결 예정): https://songpa.dahamtax.com (관리자: https://songpa.dahamtax.com/admin/)
+- 본사 DNS 등록 전이라 보류 중: 등록되면 "도메인 연결 보류" 커밋을 git revert 하면 CNAME·도메인 설정이 복구됨
 - `CNAME` 파일에 도메인이 적혀 있음
 - DNS: dahamtax.com 은 AWS Route 53 에서 관리 (본사 담당). 레코드 `songpa` CNAME → `dahamsptax.github.io`
 - GitHub 저장소 Settings → Pages → Custom domain 에 `songpa.dahamtax.com` 입력 → Enforce HTTPS 체크
