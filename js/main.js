@@ -209,10 +209,32 @@
   if (form) {
     const sel = form.querySelector("[name=service]");
     sel.innerHTML += SV.map(s => `<option>${esc(s.title)}</option>`).join("") + "<option>기타 문의</option>";
+    const status = form.querySelector(".form-status");
+    const btn = form.querySelector("[type=submit]");
+    const say = (msg, kind) => { if (status) { status.textContent = msg; status.className = "form-status " + (kind || ""); } };
     form.addEventListener("submit", e => {
       if (form.getAttribute("action")) return; // action 이 설정되어 있으면 그대로 전송
       e.preventDefault();
       const d = new FormData(form);
+
+      /* 구글 Apps Script 로 전송 → 시트 저장 + 슬랙 알림 */
+      if (S.formEndpoint) {
+        d.append("page", location.href);
+        btn.disabled = true;
+        say("보내는 중입니다…");
+        fetch(S.formEndpoint, { method: "POST", body: new URLSearchParams(d) })
+          .then(r => r.json())
+          .then(res => {
+            if (!res.ok) throw new Error(res.error || "fail");
+            form.reset();
+            say("상담 문의가 접수되었습니다. 확인 후 빠르게 연락드리겠습니다.", "ok");
+          })
+          .catch(() => say(`전송에 실패했습니다. 잠시 후 다시 시도하시거나 ${S.phone} 로 전화 주세요.`, "err"))
+          .finally(() => { btn.disabled = false; });
+        return;
+      }
+
+      /* formEndpoint 가 없으면 메일 앱으로 */
       const body = ["성함", "연락처", "이메일", "사업자 구분", "문의 서비스", "문의 내용"]
         .map((k, j) => `${k}: ${d.get(["name", "phone", "email", "type", "service", "message"][j]) || ""}`).join("\n");
       location.href = `mailto:${S.email}?subject=${encodeURIComponent("[홈페이지 상담문의] " + d.get("name"))}&body=${encodeURIComponent(body)}`;

@@ -35,3 +35,13 @@ HTML/CSS/JS만으로 만든 정적 사이트입니다. 서버·빌드가 필요 
 | 상담 폼 전송 방식 | `contact.html` 주석 참고 (기본: 메일 앱으로 전송) |
 
 GitHub 웹에서 파일을 열고 연필(✏️) 아이콘으로 바로 수정 → Commit 하면 1~2분 뒤 사이트에 반영됩니다.
+
+지금 쓸 수 있는 주소는 이렇습니다.
+
+홈페이지: https://dahamsptax.github.io/dahamtax-songpa.github.io/
+칼럼 관리자: https://dahamsptax.github.io/dahamtax-songpa.github.io/admin/
+
+본사가 DNS 레코드를 추가하고 제가 푸시하면 아래 주소로 바뀝니다.
+
+홈페이지: https://songpa.dahamtax.com
+칼럼 관리자: https://songpa.dahamtax.com/admin/

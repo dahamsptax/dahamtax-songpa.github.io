@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>상담문의 | 다함세무법인 송파지점</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body data-page="contact">
 
@@ -20,10 +20,13 @@
 <section class="block" style="padding-top:20px">
   <!--
     폼 전송 방식:
-    - 기본: 제출하면 방문자의 메일 앱이 열리고 config.js 의 email 로 보냅니다.
-    - Formspree(무료) 사용 시: form 태그에 action="https://formspree.io/f/발급코드" method="POST" 추가
+    - js/config.js 의 formEndpoint 가 있으면: 구글 시트 저장 + 슬랙 알림 (tools/contact-notify.gs)
+    - 비어 있으면: 방문자의 메일 앱이 열리고 config.js 의 email 로 보냅니다.
   -->
+  <div class="container">
   <form class="form" id="contact-form">
+    <!-- 스팸 방지용 숨은 칸 (사람에게는 보이지 않음) -->
+    <label class="hp" aria-hidden="true">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label>
     <div class="row2">
       <label>성함 *<input name="name" required></label>
       <label>연락처 *<input name="phone" type="tel" required></label>
@@ -38,7 +41,9 @@
     <label>문의 내용 *<textarea name="message" required></textarea></label>
     <label class="agree"><input type="checkbox" required> 개인정보 수집·이용에 동의합니다. (수집 항목: 성함·연락처·문의 내용 / 이용 목적: 상담 접수 및 회신 / 보유 기간: 상담 종료 후 1년)</label>
     <button class="btn btn-primary" type="submit">상담 문의 보내기</button>
+    <p class="form-status" role="status" aria-live="polite"></p>
   </form>
+  </div>
 </section>
 
 <section class="block soft">
@@ -58,7 +63,7 @@
   </div>
 </section>
 
-<script src="js/config.js?v=7"></script>
-<script src="js/main.js?v=7"></script>
+<script src="js/config.js?v=8"></script>
+<script src="js/main.js?v=8"></script>
 </body>
 </html>
