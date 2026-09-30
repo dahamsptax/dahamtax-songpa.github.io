@@ -17,7 +17,7 @@ window.SITE = {
   formEndpoint: "https://script.google.com/macros/s/AKfycbxEdIkGsUrdRWanlnozqa1YareOuiz5EIErmBR1UoCU8tl8qGEqLSjWiAaXjJppusJh/exec",               // 상담문의 수신 주소 (구글 Apps Script 웹 앱 URL, tools/contact-notify.gs 참고). 비워두면 메일 앱으로 전송
   kakao: "https://pf.kakao.com/_HGdEn/chat", // 카카오톡 채널 1:1 채팅 링크 (상담문의 빠른 문의 버튼)
   blog: "#",                         // 네이버 블로그 링크
-  mapLink: "#",                      // 네이버/카카오 지도 링크
+  mapLink: "https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%86%A1%ED%8C%8C%EA%B5%AC%20%ED%86%A0%EC%84%B1%EB%A1%9C15%EA%B8%B8%203-3", // 지도 클릭 시 열리는 네이버 지도 (주소 검색)
   hours: ["평일 09:00 – 18:00", "주말·공휴일 휴무"]
 };
 

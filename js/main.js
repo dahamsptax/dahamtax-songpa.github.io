@@ -10,7 +10,7 @@
   /* ---------- 헤더 ---------- */
   const nav = [
     ["services.html", "서비스", "services"],
-    ["about.html", "세무사 소개", "about"],
+    ["about.html", "구성원 소개", "about"],
     ["column.html", "칼럼", "column"],
     ["faq.html", "자주 묻는 질문", "faq"]
   ];
@@ -50,7 +50,7 @@
       </div>
       <div><h4>서비스</h4>${SV.map(s => `<a href="services.html#${s.id}">${esc(s.title)}</a>`).join("")}</div>
       <div><h4>바로가기</h4>
-        <a href="index.html">홈</a><a href="about.html">세무사 소개</a><a href="column.html">칼럼</a>
+        <a href="index.html">홈</a><a href="about.html">구성원 소개</a><a href="column.html">칼럼</a>
         <a href="faq.html">자주 묻는 질문</a><a href="contact.html">상담문의</a><a href="${esc(S.blog)}">블로그</a>
       </div>
       <div><h4>사무소 안내</h4>
@@ -200,6 +200,12 @@
         <p class="muted">여기에 서비스 상세 설명(진행 절차, 대상, 비용 안내 등)을 추가하세요. — 임시 내용</p>
         <span class="tags">${esc(s.tags)}</span></div>
     </section>`).join("");
+
+  /* 오시는 길 지도: 클릭하면 네이버 지도 */
+  document.querySelectorAll(".map-link").forEach(a => {
+    if (S.mapLink && S.mapLink !== "#") a.href = S.mapLink;
+    else { a.removeAttribute("href"); a.removeAttribute("target"); }
+  });
 
   /* 상담문의: 빠른 문의(전화·카카오톡) */
   const qc = document.getElementById("quick-contact");

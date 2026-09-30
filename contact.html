@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>상담문의 | 다함세무법인 송파지점</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=12">
+  <link rel="stylesheet" href="css/style.css?v=13">
 </head>
 <body data-page="contact">
 
@@ -62,11 +62,15 @@
         <dt>시간</dt><dd data-site="hours"></dd>
       </dl>
     </div>
-    <div class="map-box">지도 영역 (네이버/카카오 지도 퍼가기 코드를 넣으세요)</div>
+    <!-- 지도: images/map.png (클릭하면 js/config.js 의 mapLink 로 이동) -->
+    <a class="map-box map-link" href="#" target="_blank" rel="noopener">
+      <img src="images/map.png?v=1" alt="다함세무법인 송파지점 오시는 길 지도" onerror="this.remove()">
+      <span class="map-cta">네이버 지도에서 길찾기 →</span>
+    </a>
   </div>
 </section>
 
-<script src="js/config.js?v=12"></script>
-<script src="js/main.js?v=11"></script>
+<script src="js/config.js?v=13"></script>
+<script src="js/main.js?v=13"></script>
 </body>
 </html>
