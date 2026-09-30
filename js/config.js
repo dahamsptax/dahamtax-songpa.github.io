@@ -14,7 +14,7 @@ window.SITE = {
   phone: "02-477-7042",                // 사무실 전화
   mobile: "010-8674-9260",             // 휴대폰 (비워두면 표시 안 함)
   email: "dahamsp@naver.com",
-  formEndpoint: "https://script.google.com/macros/s/AKfycbyKkFp9KaEW576YircgPpPeEh-nsY70unrB9PBZKm1EBjMC4vSTAE5Y9Vyj48cgsNN2/exec",               // 상담문의 수신 주소 (구글 Apps Script 웹 앱 URL, tools/contact-notify.gs 참고). 비워두면 메일 앱으로 전송
+  formEndpoint: "https://script.google.com/macros/s/AKfycbxEdIkGsUrdRWanlnozqa1YareOuiz5EIErmBR1UoCU8tl8qGEqLSjWiAaXjJppusJh/exec",               // 상담문의 수신 주소 (구글 Apps Script 웹 앱 URL, tools/contact-notify.gs 참고). 비워두면 메일 앱으로 전송
   kakao: "#",                        // 카카오톡 채널 링크
   blog: "#",                         // 네이버 블로그 링크
   mapLink: "#",                      // 네이버/카카오 지도 링크
