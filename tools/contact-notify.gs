@@ -52,9 +52,11 @@ function doPost(e) {
     saveError = String(err);
   }
 
-  try { notifySlack_(d, saveError); } catch (err) { console.error(err); }
-  try { notifyEmail_(d); } catch (err) { console.error(err); }
-  return json_({ ok: true });
+  // 알림 결과를 응답에 함께 돌려줌 (문제가 생기면 테스트 접수만으로 바로 원인 확인)
+  let slack, mail;
+  try { slack = notifySlack_(d, saveError); } catch (err) { slack = 'error: ' + err; console.error(err); }
+  try { mail = notifyEmail_(d); } catch (err) { mail = 'error: ' + err; console.error(err); }
+  return json_({ ok: true, saved: !saveError, slack: slack, mail: mail });
 }
 
 /* 브라우저에서 웹 앱 주소를 열었을 때 동작 확인용 */
@@ -69,13 +71,15 @@ function testNotify() {
   const url = props.SLACK_WEBHOOK_URL || '';
   console.log('SLACK_WEBHOOK_URL: ' + (url ? url.slice(0, 40) + '… (길이 ' + url.length + ')' : '없음 — 속성 이름을 확인하세요'));
   const d = { name: '테스트', phone: '010-0000-0000', email: '', type: '개인사업자', service: '세무기장 / 자문', message: '알림 테스트입니다.', page: 'test' };
-  notifySlack_(d);
-  notifyEmail_(d);
+  console.log('슬랙: ' + notifySlack_(d));
+  console.log('이메일: ' + notifyEmail_(d));
 }
 
+/* 결과 문자열을 돌려줌: 'ok' / 'no-url' / 'http 404 no_service' 등 */
 function notifySlack_(d, saveError) {
   const url = (PropertiesService.getScriptProperties().getProperty('SLACK_WEBHOOK_URL') || '').trim();
-  if (!url) { console.warn('슬랙 알림 건너뜀: SLACK_WEBHOOK_URL 스크립트 속성이 없습니다.'); return; }
+  if (!url) { console.warn('슬랙 알림 건너뜀: SLACK_WEBHOOK_URL 스크립트 속성이 없습니다.'); return 'no-url'; }
+  if (!/^https:\/\/hooks\.slack\.com\/services\//.test(url)) return 'bad-url (https://hooks.slack.com/services/ 로 시작해야 함)';
   const lines = [
     saveError ? `:warning: 시트 저장 실패: ${saveError}` : '',
     ':bell: *새 상담문의가 접수되었습니다*',
@@ -92,12 +96,14 @@ function notifySlack_(d, saveError) {
     muteHttpExceptions: true,
   });
   // 성공이면 200 / ok. no_service·invalid_token 등이 나오면 웹훅 주소가 잘못된 것
-  console.log('슬랙 응답: ' + res.getResponseCode() + ' ' + res.getContentText());
+  const code = res.getResponseCode(), body = res.getContentText().slice(0, 100);
+  console.log('슬랙 응답: ' + code + ' ' + body);
+  return code === 200 ? 'ok' : 'http ' + code + ' ' + body;
 }
 
 function notifyEmail_(d) {
-  const to = PropertiesService.getScriptProperties().getProperty('NOTIFY_EMAIL');
-  if (!to) return;
+  const to = (PropertiesService.getScriptProperties().getProperty('NOTIFY_EMAIL') || '').trim();
+  if (!to) return 'off';
   MailApp.sendEmail({
     to: to,
     subject: `[홈페이지 상담문의] ${d.name} (${d.phone})`,
@@ -106,6 +112,7 @@ function notifyEmail_(d) {
       `사업자 구분: ${d.type}`, `문의 서비스: ${d.service}`, '', d.message,
     ].join('\n'),
   });
+  return 'ok';
 }
 
 /* 저장할 스프레드시트: 시트에서 만든 스크립트면 그 시트,
