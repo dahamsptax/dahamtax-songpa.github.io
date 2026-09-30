@@ -2,3 +2,6 @@
 desktop.ini
 Thumbs.db
 .claude/
+
+# 개인 메모·토큰 파일 (절대 올리지 않음)
+*.txt
