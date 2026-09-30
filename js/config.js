@@ -15,7 +15,7 @@ window.SITE = {
   mobile: "010-8674-9260",             // 휴대폰 (비워두면 표시 안 함)
   email: "dahamsp@naver.com",
   formEndpoint: "https://script.google.com/macros/s/AKfycbxEdIkGsUrdRWanlnozqa1YareOuiz5EIErmBR1UoCU8tl8qGEqLSjWiAaXjJppusJh/exec",               // 상담문의 수신 주소 (구글 Apps Script 웹 앱 URL, tools/contact-notify.gs 참고). 비워두면 메일 앱으로 전송
-  kakao: "#",                        // 카카오톡 채널 링크
+  kakao: "https://pf.kakao.com/_HGdEn/chat", // 카카오톡 채널 1:1 채팅 링크 (상담문의 빠른 문의 버튼)
   blog: "#",                         // 네이버 블로그 링크
   mapLink: "#",                      // 네이버/카카오 지도 링크
   hours: ["평일 09:00 – 18:00", "주말·공휴일 휴무"]

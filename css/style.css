@@ -188,6 +188,16 @@ img.photo { width: 100%; object-fit: cover; object-position: center 30%; display
 .form-status { margin: 0; font-size: 15px; min-height: 1.4em; color: var(--muted); }
 .form-status.ok { color: #1f9d74; font-weight: 600; }
 .form-status.err { color: #d4502b; font-weight: 600; }
+
+/* 상담문의 아래 빠른 문의 (전화·카카오톡) */
+.quick-contact { max-width: 720px; margin: 36px auto 0; padding: 28px; border-radius: var(--radius); background: #12213f; color: #fff; }
+.quick-contact h3 { font-size: 19px; margin: 0 0 16px; color: #fff; }
+.qc-btn { display: flex; align-items: center; gap: 12px; padding: 17px 22px; border-radius: 12px; font-size: 18px; font-weight: 700; text-decoration: none; transition: .15s; }
+.qc-tel { border: 1px solid rgba(255,255,255,.35); color: #fff; }
+.qc-tel:hover { background: rgba(255,255,255,.08); }
+.qc-kakao { margin-top: 12px; background: #fee500; color: #191919; }
+.qc-kakao:hover { filter: brightness(.96); }
+.qc-hours { margin: 16px 0 0; font-size: 14px; color: rgba(255,255,255,.75); }
 .form .agree { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: 14px; color: var(--muted); }
 .form .agree input { width: auto; margin-top: 4px; }
 

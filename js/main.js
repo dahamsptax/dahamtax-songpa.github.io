@@ -201,6 +201,18 @@
         <span class="tags">${esc(s.tags)}</span></div>
     </section>`).join("");
 
+  /* 상담문의: 빠른 문의(전화·카카오톡) */
+  const qc = document.getElementById("quick-contact");
+  if (qc) {
+    const telIcon = `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>`;
+    const talkIcon = `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.8 5.3 4.6 6.7L5.7 21a.4.4 0 0 0 .6.4l4-2.6c.6.1 1.1.1 1.7.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>`;
+    qc.innerHTML = `
+      <h3>빠른 문의가 필요하신가요?</h3>
+      <a class="qc-btn qc-tel" href="tel:${esc(S.phone)}">${telIcon}<span>${esc(S.phone)}</span></a>
+      ${S.kakao && S.kakao !== "#" ? `<a class="qc-btn qc-kakao" href="${esc(S.kakao)}" target="_blank" rel="noopener">${talkIcon}<span>카카오톡으로 문의하기</span></a>` : ""}
+      <p class="qc-hours">업무 시간: ${S.hours.map(esc).join(" · ")}</p>`;
+  }
+
   /* FAQ 아코디언 */
   document.querySelectorAll(".faq-q").forEach(b => b.addEventListener("click", () => b.parentElement.classList.toggle("open")));
 
