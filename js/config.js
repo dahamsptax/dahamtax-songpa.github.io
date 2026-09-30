@@ -5,7 +5,7 @@ window.SITE = {
   name: "다함세무법인 송파지점",      // 사무소 이름
   nameEn: "Daham Tax Corp. Songpa Branch",
   logoText: "다함세무법인",             // 로고 이미지가 없을 때 표시할 글자 (푸터에도 사용)
-  logoImage: "images/logo.png",      // 헤더 로고 이미지 (비워두면 logoText 표시)
+  logoImage: "images/logo2.png",     // 헤더 로고 이미지 (비워두면 logoText 표시)
   branch: "송파지점",                  // 로고 옆에 표시할 지점명
   domain: "https://dahamsptax.github.io/dahamtax-songpa.github.io", // 홈페이지 주소 (도메인 연결 시 CNAME 파일과 같게)
   tagline: "정확한 신고를 넘어, 절세의 기준을 만듭니다",

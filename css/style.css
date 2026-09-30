@@ -36,12 +36,12 @@ img { max-width: 100%; display: block; }
 .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92);
   backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: .2s; }
 .site-header.scrolled { border-bottom-color: var(--line); }
-.header-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; }
+.header-inner { height: 84px; display: flex; align-items: center; justify-content: space-between; }
 .logo { display: flex; flex-direction: column; line-height: 1; }
 .logo-mark { font-weight: 800; font-size: 22px; letter-spacing: .02em; color: #0f2a5c; }
 .logo-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
 .logo-img { flex-direction: row; align-items: center; gap: 12px; }
-.logo-img img { height: 54px; width: auto; display: block; }
+.logo-img img { height: 56px; width: auto; display: block; }
 .logo-branch { font-size: 17px; font-weight: 700; color: #1d6b35; padding-left: 12px; border-left: 1px solid var(--line); line-height: 1.2; }
 .logo-branch:empty { display: none; }
 .nav { display: flex; align-items: center; gap: 30px; font-size: 15px; font-weight: 500; }
@@ -232,6 +232,9 @@ img.photo { width: 100%; object-fit: cover; object-position: center 30%; display
   .photo { max-width: 360px; }
 }
 @media (max-width: 760px) {
+  .header-inner { height: 72px; }
+  .logo-img img { height: 40px; }
+  .logo-branch { font-size: 15px; padding-left: 10px; }
   .menu-btn { display: block; }
   .nav { position: absolute; top: 72px; left: 0; right: 0; background: #fff; flex-direction: column;
     align-items: stretch; gap: 0; padding: 8px 20px 20px; border-bottom: 1px solid var(--line); display: none; }
