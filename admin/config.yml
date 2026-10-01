@@ -5,7 +5,7 @@ backend:
   repo: dahamsptax/dahamtax-songpa.github.io
   branch: main
 
-site_url: https://dahamsptax.github.io/dahamtax-songpa.github.io/
+site_url: https://songpa.dahamtax.com/
 
 # 본문에 넣은 이미지가 저장되는 곳
 media_folder: images/posts
