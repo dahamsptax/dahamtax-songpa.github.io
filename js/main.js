@@ -7,6 +7,23 @@
   const catColor = c => ({ "세무기장": "#2b6cd4", "경정청구": "#1f9d74", "아웃소싱": "#7a5af5",
     "세무조사": "#d4502b", "법인전환": "#0f7c9c", "세무노트": "#b8862b" }[c] || "#2b6cd4");
 
+  /* ---------- 스크롤하면 차례로 나타나기 ---------- */
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const revealObserver = "IntersectionObserver" in window && new IntersectionObserver((entries, observer) => {
+    // Stagger only within what enters together, so a lone card on a phone never lags behind the scroll
+    entries.filter(e => e.isIntersecting).forEach((e, i) => {
+      observer.unobserve(e.target);
+      e.target.classList.remove("reveal");
+      if (reduceMotion) e.target.animate({ opacity: [0, 1] }, 200);
+      else e.target.animate(
+        { opacity: [0, 1], transform: ["translateY(28px)", "none"] },
+        { duration: 800, delay: Math.min(i, 5) * 70, easing: "cubic-bezier(.16,1,.3,1)", fill: "backwards" });
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  const reveal = selector => {
+    if (revealObserver) document.querySelectorAll(selector).forEach(el => { el.classList.add("reveal"); revealObserver.observe(el); });
+  };
+
   /* ---------- 헤더 ---------- */
   const nav = [
     ["services.html", "서비스", "services"],
@@ -217,6 +234,8 @@
         </nav>`;
     }
   }
+  // First render only: cards swapped in by a chip or the pager should appear at once
+  reveal(".post-card");
   } /* renderPosts */
 
   /* 서비스 상세 */
@@ -285,4 +304,6 @@
       location.href = `mailto:${S.email}?subject=${encodeURIComponent("[홈페이지 상담문의] " + d.get("name"))}&body=${encodeURIComponent(body)}`;
     });
   }
+
+  reveal(".sec-head, .latest-chips, .toolbar, .svc-card, .svc-detail, .about-grid, .faq-item, .form, .quick-contact, .info-card, .map-box, .cta-band .container");
 })();

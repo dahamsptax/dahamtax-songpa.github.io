@@ -237,6 +237,17 @@ img.photo { width: 100%; object-fit: cover; object-position: center 30%; display
 .kakao-float:hover { transform: translateY(-2px); filter: brightness(.96); }
 .kakao-float:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
+/* 스크롤하면 차례로 나타나기 (js/main.js 의 reveal) */
+.reveal { opacity: 0; }
+@media print { .reveal { opacity: 1; } }
+
+/* 누르는 순간 바로 반응 */
+.btn:active, .chip:active, .kakao-float:active { transform: scale(.97); transition: transform 100ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn:active, .chip:active, .kakao-float:active { transform: none; }
+}
+
 /* ---------- 반응형 ---------- */
 @media (max-width: 960px) {
   .svc-grid, .post-grid { grid-template-columns: repeat(2, 1fr); }
