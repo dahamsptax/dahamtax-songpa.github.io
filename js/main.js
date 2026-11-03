@@ -104,7 +104,8 @@
   /* 본문: 관리자(Sveltia CMS)가 저장한 마크다운 → HTML.
      이미지 주소 /images/... 는 하위 경로 사이트에서도 보이도록 상대경로로 바꿈 */
   function bodyHtml(md) {
-    const html = window.marked ? window.marked.parse(md || "") : md || "";
+    // marked's GFM reads paired "~" in ranges like 1~10월 as strikethrough, so keep them literal
+    const html = window.marked ? window.marked.parse((md || "").replace(/~/g, "\\~")) : md || "";
     return html.replace(/(src|href)="\/images\//g, '$1="images/');
   }
 
