@@ -115,6 +115,7 @@ time { color: var(--light); font-size: 14px; }
 .chip { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: #fff;
   font: inherit; font-size: 14px; cursor: pointer; color: var(--muted); }
 .chip.on { background: var(--text); color: #fff; border-color: var(--text); }
+.latest-chips { margin-bottom: 32px; }
 .search { position: relative; }
 .search input { width: 240px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line); font: inherit; font-size: 14px; }
 .search input:focus { outline: none; border-color: var(--primary); }
@@ -212,7 +213,7 @@ img.photo { width: 100%; object-fit: cover; object-position: center 30%; display
 .cta-band p { opacity: .75; margin: 12px 0 32px; }
 
 /* ---------- 푸터 ---------- */
-.site-footer { background: #0f1319; color: #c9ced6; padding: 70px 0 30px; font-size: 14px; }
+.site-footer { background: #0f1319; color: #c9ced6; padding: 70px 0 96px; font-size: 14px; } /* bottom room so .kakao-float never covers the footer links */
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 40px; }
 .site-footer h4 { color: #fff; font-size: 15px; margin-bottom: 16px; }
 .site-footer a { display: block; margin-bottom: 8px; color: #c9ced6; }
@@ -228,6 +229,13 @@ img.photo { width: 100%; object-fit: cover; object-position: center 30%; display
 .prose h2 { font-size: 20px; margin: 2em 0 .6em; }
 .prose p, .prose li { color: var(--muted); margin-bottom: .8em; }
 .prose ul { padding-left: 1.3em; }
+
+/* 우측 하단 카카오톡 상담 버튼 */
+.kakao-float { position: fixed; right: 24px; bottom: 24px; z-index: 40; display: flex; align-items: center; gap: 8px;
+  padding: 14px 22px; border-radius: 999px; background: #fee500; color: #191919; font-size: 15px; font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18); transition: .2s; }
+.kakao-float:hover { transform: translateY(-2px); filter: brightness(.96); }
+.kakao-float:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
 /* ---------- 반응형 ---------- */
 @media (max-width: 960px) {
@@ -258,4 +266,7 @@ img.photo { width: 100%; object-fit: cover; object-position: center 30%; display
   .search, .search input { width: 100%; }
   .svc-detail { grid-template-columns: 1fr; gap: 4px; }
   .post-nav a.r { text-align: left; }
+  .kakao-float { right: 16px; bottom: 16px; width: 56px; height: 56px; padding: 0; justify-content: center; }
+  .kakao-float svg { width: 26px; height: 26px; }
+  .kakao-float span { display: none; }
 }

@@ -66,6 +66,19 @@
     </div>`;
   document.body.append(footer);
 
+  /* ---------- 우측 하단 카카오톡 상담 버튼 ---------- */
+  const talkIcon = `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.8 5.3 4.6 6.7L5.7 21a.4.4 0 0 0 .6.4l4-2.6c.6.1 1.1.1 1.7.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>`;
+  if (S.kakao && S.kakao !== "#") {
+    const talk = document.createElement("a");
+    talk.className = "kakao-float";
+    talk.href = S.kakao;
+    talk.target = "_blank";
+    talk.rel = "noopener";
+    talk.setAttribute("aria-label", "카카오톡 상담");
+    talk.innerHTML = `${talkIcon}<span>카카오톡 상담</span>`;
+    document.body.append(talk);
+  }
+
   /* ---------- 공통 치환: data-site="phone" 등 ---------- */
   document.querySelectorAll("[data-site]").forEach(el => {
     const key = el.dataset.site, v = S[key];
@@ -136,8 +149,22 @@
       </div>
     </a>`;
 
-  /* 홈: 최신 칼럼 3개 */
-  if (latest) latest.innerHTML = posts.slice(0, 3).map(card).join("");
+  /* 홈: 분류를 눌러 고르는 최신 칼럼 3개 */
+  if (latest) {
+    const chips = document.getElementById("latest-chips");
+    const cats = ["전체", ...window.CATEGORIES.filter(c => posts.some(p => p.category === c))];
+    chips.innerHTML = cats.map(c => `<button class="chip" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+    const show = cat => {
+      chips.querySelectorAll(".chip").forEach(b => {
+        const on = b.dataset.c === cat;
+        b.classList.toggle("on", on);
+        b.setAttribute("aria-pressed", on);
+      });
+      latest.innerHTML = posts.filter(p => cat === "전체" || p.category === cat).slice(0, 3).map(card).join("");
+    };
+    chips.addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) show(b.dataset.c); });
+    show("전체");
+  }
 
   /* 칼럼 목록: 카테고리 필터 + 검색 + 페이지네이션 */
   if (list) {
@@ -212,7 +239,6 @@
   const qc = document.getElementById("quick-contact");
   if (qc) {
     const telIcon = `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>`;
-    const talkIcon = `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.8 5.3 4.6 6.7L5.7 21a.4.4 0 0 0 .6.4l4-2.6c.6.1 1.1.1 1.7.1 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>`;
     qc.innerHTML = `
       <h3>빠른 문의가 필요하신가요?</h3>
       <a class="qc-btn qc-tel" href="tel:${esc(S.phone)}">${telIcon}<span>${esc(S.phone)}</span></a>
