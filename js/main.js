@@ -152,8 +152,9 @@
     .filter(p => p && p.title && p.date)
     .map(p => ({ category: "", summary: "", body: "", ...p, date: String(p.date).slice(0, 10), id: postId(p) }))
     .sort((a, b) => b.date.localeCompare(a.date));
+  const postHref = p => `posts/${encodeURIComponent(p.id)}.html`;
   const card = p => `
-    <a class="post-card" href="post.html?id=${encodeURIComponent(p.id)}">
+    <a class="post-card" href="${postHref(p)}">
       <div class="thumb" style="--c:${catColor(p.category)}">
         <span class="thumb-cat">${esc(p.category)}</span>
         <strong>${esc(p.title.split("—")[0].trim())}</strong>
@@ -213,26 +214,31 @@
     const id = new URLSearchParams(location.search).get("id");
     const i = posts.findIndex(p => p.id === id);
     const p = posts[i];
-    if (!p) {
-      article.innerHTML = `<p class="empty">글을 찾을 수 없습니다. <a href="column.html">칼럼 목록으로</a></p>`;
-    } else {
-      document.title = `${p.title} | ${S.name}`;
-      const prev = posts[i + 1], next = posts[i - 1];
-      article.innerHTML = `
-        <a class="back" href="column.html">← 칼럼 목록</a>
-        <span class="cat" style="color:${catColor(p.category)}">${esc(p.category)}</span>
-        <h1>${esc(p.title)}</h1>
-        <time>${fmtDate(p.date)}</time>
-        <div class="post-body">${bodyHtml(p.body)}</div>
-        <div class="post-cta">
-          <p><strong>비슷한 상황이신가요?</strong><br>사업장 상황에 맞춰 직접 안내드립니다.</p>
-          <a class="btn btn-primary" href="contact.html">상담 신청하기</a>
-        </div>
-        <nav class="post-nav">
-          ${prev ? `<a href="post.html?id=${encodeURIComponent(prev.id)}"><small>이전 글</small>${esc(prev.title)}</a>` : "<span></span>"}
-          ${next ? `<a class="r" href="post.html?id=${encodeURIComponent(next.id)}"><small>다음 글</small>${esc(next.title)}</a>` : "<span></span>"}
-        </nav>`;
-    }
+    const show = () => {
+      if (!p) {
+        article.innerHTML = `<p class="empty">글을 찾을 수 없습니다. <a href="column.html">칼럼 목록으로</a></p>`;
+      } else {
+        document.title = `${p.title} | ${S.name}`;
+        const prev = posts[i + 1], next = posts[i - 1];
+        article.innerHTML = `
+          <a class="back" href="column.html">← 칼럼 목록</a>
+          <span class="cat" style="color:${catColor(p.category)}">${esc(p.category)}</span>
+          <h1>${esc(p.title)}</h1>
+          <time>${fmtDate(p.date)}</time>
+          <div class="post-body">${bodyHtml(p.body)}</div>
+          <div class="post-cta">
+            <p><strong>비슷한 상황이신가요?</strong><br>사업장 상황에 맞춰 직접 안내드립니다.</p>
+            <a class="btn btn-primary" href="contact.html">상담 신청하기</a>
+          </div>
+          <nav class="post-nav">
+            ${prev ? `<a href="${postHref(prev)}"><small>이전 글</small>${esc(prev.title)}</a>` : "<span></span>"}
+            ${next ? `<a class="r" href="${postHref(next)}"><small>다음 글</small>${esc(next.title)}</a>` : "<span></span>"}
+          </nav>`;
+      }
+    };
+    // Old ?id= links move to the static page; a post saved in the CMS has none until the next publish, so render it here
+    if (!p) show();
+    else fetch(postHref(p), { method: "HEAD" }).then(r => r.ok ? location.replace(postHref(p)) : show(), show);
   }
   // First render only: cards swapped in by a chip or the pager should appear at once
   reveal(".post-card");

@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>페이지를 찾을 수 없습니다</title>
+  <script>
+    // A post saved in the CMS has no static page until the next publish, so fall back to the dynamic one
+    const m = location.pathname.match(/^\/posts\/([^/]+)\.html$/);
+    if (m) location.replace("/post.html?id=" + m[1]);
+  </script>
   <style>body{font-family:-apple-system,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;color:#15161a}a{color:#2b6cd4}</style>
 </head>
 <body>
