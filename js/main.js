@@ -29,8 +29,7 @@
     ["services.html", "서비스", "services"],
     ["about.html", "구성원 소개", "about"],
     ["column.html", "칼럼", "column"],
-    ["faq.html", "자주 묻는 질문", "faq"],
-    ["intro/", "서비스 소개서", "intro"]
+    ["faq.html", "자주 묻는 질문", "faq"]
   ];
   const header = document.createElement("header");
   header.className = "site-header";
@@ -43,7 +42,7 @@
       <nav class="nav">
         <div class="nav-item has-sub">
           <a href="services.html" class="${page === "services" ? "active" : ""}">서비스</a>
-          <div class="sub">${SV.map(s => `<a href="services.html#${s.id}">${esc(s.title)}</a>`).join("")}</div>
+          <div class="sub">${SV.map(s => `<a href="services.html#${s.id}">${esc(s.title)}</a>`).join("")}<a href="intro/">서비스 소개서</a></div>
         </div>
         ${nav.slice(1).map(([h, t, k]) => `<a href="${h}" class="${page === k ? "active" : ""}">${t}</a>`).join("")}
         <a href="contact.html" class="btn btn-primary btn-sm">상담 신청</a>
