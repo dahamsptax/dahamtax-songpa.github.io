@@ -29,7 +29,8 @@
     ["services.html", "서비스", "services"],
     ["about.html", "구성원 소개", "about"],
     ["column.html", "칼럼", "column"],
-    ["faq.html", "자주 묻는 질문", "faq"]
+    ["faq.html", "자주 묻는 질문", "faq"],
+    ["intro/", "서비스 소개서", "intro"]
   ];
   const header = document.createElement("header");
   header.className = "site-header";
