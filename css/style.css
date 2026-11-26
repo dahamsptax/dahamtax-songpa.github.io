@@ -281,3 +281,29 @@ img.photo { width: 100%; object-fit: cover; object-position: center 30%; display
   .kakao-float svg { width: 26px; height: 26px; }
   .kakao-float span { display: none; }
 }
+
+/* ---------- 서비스 페이지 (소개서 내용) ---------- */
+.svc-tabs { position: sticky; top: 84px; z-index: 20; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
+.svc-tabs .container { display: flex; gap: 6px; overflow-x: auto; padding-top: 10px; padding-bottom: 10px; scrollbar-width: none; }
+.svc-tabs a { flex: none; padding: 9px 18px; border-radius: 999px; font-size: 15px; font-weight: 600; color: var(--muted); }
+.svc-tabs a:hover { background: var(--bg-soft); color: var(--text); }
+.svc-tabs a.on { background: var(--primary); color: #fff; }
+.sv-sec { padding: 72px 0 24px; scroll-margin-top: 150px; }
+.sv-sec h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; letter-spacing: -.02em; margin-bottom: 10px; }
+.sv-sec .lead { color: var(--muted); margin-bottom: 28px; }
+.sv-sec h3 { font-size: 19px; margin: 32px 0 12px; }
+.sv-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.sv-box { border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; background: #fff; }
+.sv-box h3 { margin: 0 0 10px; font-size: 19px; }
+.sv-box p, .sv-box li { color: var(--muted); font-size: 15px; }
+.sv-box ul { padding-left: 18px; }
+.sv-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.sv-table th, .sv-table td { border-bottom: 1px solid var(--line); padding: 14px 12px; text-align: left; vertical-align: top; }
+.sv-table th { background: var(--bg-soft); font-weight: 700; white-space: nowrap; }
+.sv-table td:first-child { font-weight: 600; white-space: nowrap; }
+.sv-scroll { overflow-x: auto; }
+.sv-note { margin-top: 14px; color: var(--muted); font-size: 14px; }
+.sv-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; counter-reset: s; list-style: none; padding: 0; }
+.sv-steps li { counter-increment: s; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; font-weight: 600; }
+.sv-steps li::before { content: counter(s); display: inline-flex; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; align-items: center; justify-content: center; font-size: 14px; margin-right: 10px; }
+@media (max-width: 760px) { .svc-tabs { top: 84px; } }

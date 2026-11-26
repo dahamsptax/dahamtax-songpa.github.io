@@ -44,7 +44,7 @@
       <nav class="nav">
         <div class="nav-item has-sub">
           <a href="services.html" class="${page === "services" ? "active" : ""}">서비스</a>
-          <div class="sub"><a href="services.html">서비스 소개서</a></div>
+          <div class="sub">${SV.map(s => `<a href="services.html#${s.id}">${esc(s.title)}</a>`).join("")}</div>
         </div>
         ${nav.slice(1).map(([h, t, k]) => `<a href="${h}" class="${page === k ? "active" : ""}">${t}</a>`).join("")}
         <a href="contact.html" class="btn btn-primary btn-sm">상담 신청</a>
