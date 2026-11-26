@@ -25,33 +25,6 @@
   };
 
 
-  /* ---------- 서비스 소개서 팝업 ---------- */
-  (function () {
-    const open = url => {
-      if (document.getElementById("intro-pop")) return;
-      const o = document.createElement("div");
-      o.id = "intro-pop";
-      o.setAttribute("role", "dialog");
-      o.setAttribute("aria-label", "서비스 소개서");
-      o.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(17,24,39,.65);display:flex;align-items:center;justify-content:center;padding:2.5vh 2.5vw";
-      o.innerHTML = '<div style="position:relative;width:100%;max-width:1280px;height:100%;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)">'
-        + '<button type="button" aria-label="닫기" style="position:absolute;top:10px;right:12px;z-index:2;width:40px;height:40px;border:0;border-radius:20px;background:#111827;color:#fff;font-size:22px;line-height:40px;cursor:pointer">×</button>'
-        + '<iframe src="' + url + '" title="서비스 소개서" style="width:100%;height:100%;border:0"></iframe></div>';
-      const close = () => { o.remove(); document.body.style.overflow = ""; document.removeEventListener("keydown", onKey); };
-      const onKey = e => { if (e.key === "Escape") close(); };
-      o.addEventListener("click", e => { if (e.target === o) close(); });
-      o.querySelector("button").addEventListener("click", close);
-      document.addEventListener("keydown", onKey);
-      document.body.style.overflow = "hidden";
-      document.body.appendChild(o);
-    };
-    document.addEventListener("click", e => {
-      const a = e.target.closest && e.target.closest('a[href="intro/"]');
-      if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
-      e.preventDefault();
-      open("intro/");
-    });
-  })();
 
   /* ---------- 헤더 ---------- */
   const nav = [
@@ -71,7 +44,7 @@
       <nav class="nav">
         <div class="nav-item has-sub">
           <a href="services.html" class="${page === "services" ? "active" : ""}">서비스</a>
-          <div class="sub"><a href="intro/">서비스 소개서</a></div>
+          <div class="sub"><a href="services.html">서비스 소개서</a></div>
         </div>
         ${nav.slice(1).map(([h, t, k]) => `<a href="${h}" class="${page === k ? "active" : ""}">${t}</a>`).join("")}
         <a href="contact.html" class="btn btn-primary btn-sm">상담 신청</a>
